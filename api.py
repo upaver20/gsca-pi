@@ -16,6 +16,7 @@ class HelloResource(object):
         msg = {
             "message": "Welcome to the Falcon"
         }
+        res.status = falcon.HTTP_200
         resp.body = json.dumps(msg)
 
 class UserList(object):
@@ -28,6 +29,7 @@ class UserList(object):
         for user in user_list:
             msg.append(user)
 
+        res.status = falcon.HTTP_200
         resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
         
 

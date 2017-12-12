@@ -4,7 +4,7 @@ GSC User Data API
 
 ## Rquestment
 
-    pip install falcon gunicorn pymongo
+    pip install falcon waitress pymongo
 
 ## Usage
-    gunicorn api:app
+	python api.py

@@ -1,6 +1,7 @@
 import falcon
 import json
 import pymongo
+import waitress
 
 class HelloResource(object):
 
@@ -12,3 +13,6 @@ class HelloResource(object):
 
 app = falcon.API()
 app.add_route("/", HelloResource())
+
+from waitress import serve
+serve(app, listen='*:8080')

@@ -27,10 +27,7 @@ class UserList(object):
         client = pymongo.MongoClient()
         db = client['r6status']
         recent = db['recent']
-        msg = []
-
-        for user in recent.find({}, {'_id': 0,'id':1,'date':1}):
-            msg.append(user)
+        msg = list(recent.find({}, {'_id': 0,'id':1,'date':1}))
 
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )

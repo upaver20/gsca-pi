@@ -57,6 +57,11 @@ class UserData(object):
 
         userdb.update({"id":id},{'$set':{"deathcount":0}},upsert=True)
         userdb.update({"id":id},{'$set':{"date":date}},upsert=True)
+        msg = {
+            "message": "success to add DataBase"
+        }
+        resp.status = falcon.HTTP_200
+        resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
 
 app = falcon.API()
 app.add_route("/hello", HelloResource())

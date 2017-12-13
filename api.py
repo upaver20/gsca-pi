@@ -41,20 +41,19 @@ class UserData(object):
         db = client['r6status']
         old = db['old']
 
-        msg = []
-        user_data = old.find({'id':id},{'_id':0}).sort('date', pymongo.DESCENDING)
-        for data in user_data:
-            msg.append(data)
+        msg = list( old.find({'id':id},{'_id':0}).sort('date', pymongo.DESCENDING))
 
-        if msg == []:
-            resp.status = falcon.HTTP_404
+        if msg:
+            resp.status = falcon.HTTP_200
+            resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
+
+        else:
             errmsg = {
             "message": "ID was not valid."
             }
+            resp.status = falcon.HTTP_404
             resp.body = json.dumps(errmsg, cls=DateTimeSupportJSONEncoder )
-        else:
-            resp.status = falcon.HTTP_200
-            resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
+
     def on_post(self, req, resp, id):
         client = pymongo.MongoClient()
         db = client['r6status']

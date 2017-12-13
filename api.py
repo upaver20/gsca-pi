@@ -3,11 +3,6 @@ import json
 import pymongo
 from waitress import serve
 from datetime import datetime
-def validate(req, resp, resource, params):
-    try:
-        params['id'] = int(params['id'])
-    except ValueError:
-        raise falcon.HTTPBadRequest('Invalid ID','ID was not valid.')
 
 class DateTimeSupportJSONEncoder(json.JSONEncoder):
     def default(self, o):
@@ -21,6 +16,7 @@ class HelloResource(object):
         msg = {
             "message": "Welcome to the Falcon"
         }
+
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(msg)
 
@@ -48,6 +44,7 @@ class UserData(object):
         for data in user_data:
             msg.append(data)
 
+        resp.status = falcon.HTTP_200
         resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
 
 app = falcon.API()

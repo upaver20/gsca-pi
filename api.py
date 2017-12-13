@@ -24,17 +24,30 @@ class UserList(object):
         client = pymongo.MongoClient()
         db = client['r6status']
         recent = db['recent']
-        user_list = recent.find({}, {'_id': 0,'id':1,'date':1})
         msg = []
-        for user in user_list:
+        for user in recent.find({}, {'_id': 0,'id':1,'date':1}):
             msg.append(user)
-
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
-        
+
+class UserData(object):
+    def on_get(self, req, resp):
+        client = pymongo.MongoClient()
+        db = client['r6status']
+        old = db['old']
+
+
+        msg = []
+        for user in req.get_param_as_list('id'):
+            user_data = old.find({'id':user},{'_id':0})
+            for data in user_data:
+                msg.append(data)
+
+        resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder )
 
 app = falcon.API()
 app.add_route("/hello", HelloResource())
 app.add_route("/userlist", UserList())
+app.add_route("/userdata", UserData())
 
 serve(app, listen='*:8080')

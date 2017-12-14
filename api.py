@@ -48,7 +48,7 @@ class UserData(object):
 
         if count == None:
             count = 0
-        if count > len(user_data):
+        if count > len(user_data)  or count == 0:
             count = len(user_data)
 
         msg = user_data[0:count]

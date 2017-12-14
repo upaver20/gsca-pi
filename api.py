@@ -1,5 +1,4 @@
 #!/home/upaver20/.anyenv/envs/pyenv/versions/falcon/bin/python
-
 import falcon
 import json
 import pymongo
@@ -37,13 +36,22 @@ class UserList(object):
 
 
 class UserData(object):
-    def on_get(self, req, resp, id):
+    def on_get(self, req, resp,id):
         client = pymongo.MongoClient()
         db = client['r6status']
         old = db['old']
 
-        msg = list(old.find({'id': id}, {'_id': 0})
-                   .sort('date', pymongo.DESCENDING))
+        user_data = list(old.find({'id': id}, {'_id': 0})
+                   .sort('date', pymongo.DESCENDING)) 
+
+        count = req.get_param_as_int('count')
+
+        if count == None:
+            count = 0
+        if count > len(user_data):
+            count = len(user_data)
+
+        msg = user_data[0:count]
 
         if msg:
             resp.status = falcon.HTTP_200

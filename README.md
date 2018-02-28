@@ -16,7 +16,7 @@ When you want to get full userdata (upa.ver.2.0.Gsc)
 
     curl -X GET https://api.限界siege.club/userdata/upa.ver.2.0.Gsc
 
- When you want to get couple of userdata (upa.ver.2.0.Gsc)
+ When you want to get couple of userdata (upa.ver.2.0.Gsc)
 
     curl -X GET https://api.限界siege.club/userdata/upa.ver.2.0.Gsc?count=2
 

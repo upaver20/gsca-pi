@@ -83,9 +83,9 @@ class UserData(object):
         resp.status = falcon.HTTP_200
         resp.body = json.dumps(msg, cls=DateTimeSupportJSONEncoder, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
 
-    class CORSMiddleware:
-        def process_request(self, req, resp):
-            resp.set_header('Access-Control-Allow-Origin', '*')
+class CORSMiddleware:
+    def process_request(self, req, resp):
+        resp.set_header('Access-Control-Allow-Origin', '*')
 
 
 app = falcon.API(middleware=[CORSMiddleware()])
